@@ -1,0 +1,23 @@
+{
+  "name": "john-wiki",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@10.6.3",
+  "description": "个人博客&知识&文档站集",
+  "author": "John",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "format": "prettier --check --write .",
+    "format:fail": "prettier --check ."
+  },
+  "dependencies": {
+    "prettier": "3.5.3"
+  }
+}
