@@ -17,10 +17,10 @@ export default defineConfig({
   // 在最终渲染出的 HTML 的 <head> 标签内加入的额外标签
   head: [
     // 浏览器标签栏 favicon
-    ['link', { rel: 'icon', href: '/icon.png', type: 'image/png' }],
+    ['link', { rel: 'icon', href: '/John-Docs/icon.png', type: 'image/png' }],
     ['meta', { name: 'author', content: 'John' }],
-    ['link', { rel: 'mask-icon', href: '/icon.png', color: '#ffffff' }],
-    ['link', { rel: 'apple-touch-icon', href: '/icon.png', sizes: '180x180' }]
+    ['link', { rel: 'mask-icon', href: '/John-Docs/icon.png', color: '#ffffff' }],
+    ['link', { rel: 'apple-touch-icon', href: '/John-Docs/icon.png', sizes: '180x180' }]
   ],
   // 最后更新时间戳
   lastUpdated: true,
@@ -67,6 +67,6 @@ export default defineConfig({
       copyright: "Copyright © 2025-present John"
     },
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/Boolomn2K' }]
+    socialLinks: [{ icon: 'github', link: 'https://github.com/Boolomn2K/John-Docs' }]
   }
 })

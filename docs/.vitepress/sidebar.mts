@@ -39,7 +39,9 @@ export const getSidebar: GetSidebarFunction = () => {
         items: [
           { text: '目录', link: '/core/ts/type_challenges/' },
           { text: '介绍', link: '/core/ts/type_challenges/introduction' },
-          { text: '内容', link: '/core/ts/type_challenges/newContent' }
+          { text: 'easy 类1-5题', link: '/core/ts/type_challenges/easy_1-5' },
+          { text: 'easy 类6-10题', link: '/core/ts/type_challenges/easy_6-10' },
+          { text: 'easy 类11-13题', link: '/core/ts/type_challenges/easy_11-13' },
         ]
       }
     ],

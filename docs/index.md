@@ -15,7 +15,7 @@ hero:
       link: /core/ts/type_challenges
     - theme: alt
       text: Github
-      link: https://github.com/Boolomn2K
+      link: https://github.com/Boolomn2K/John-Docs
 
 features:
   - title: 自信
