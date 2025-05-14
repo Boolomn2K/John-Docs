@@ -42,6 +42,16 @@ export const getSidebar: GetSidebarFunction = () => {
           { text: 'easy 类1-5题', link: '/core/ts/type_challenges/easy_1-5' },
           { text: 'easy 类6-10题', link: '/core/ts/type_challenges/easy_6-10' },
           { text: 'easy 类11-13题', link: '/core/ts/type_challenges/easy_11-13' },
+          { text: 'medium 类1-10题', link: '/core/ts/type_challenges/medium_1-10' },
+          { text: 'medium 类11-20题', link: '/core/ts/type_challenges/medium_11-20' },
+          { text: 'medium 类21-30题', link: '/core/ts/type_challenges/medium_21-30' },
+          { text: 'medium 类31-40题', link: '/core/ts/type_challenges/medium_31-40' },
+          { text: 'medium 类41-50题', link: '/core/ts/type_challenges/medium_41-50' },
+          { text: 'medium 类51-60题', link: '/core/ts/type_challenges/medium_51-60' },
+          { text: 'medium 类61-70题', link: '/core/ts/type_challenges/medium_61-70' },
+          { text: 'medium 类71-80题', link: '/core/ts/type_challenges/medium_71-80' },
+          { text: 'medium 类81-90题', link: '/core/ts/type_challenges/medium_81-90' },
+          { text: 'medium 类91-102题', link: '/core/ts/type_challenges/medium_91-102' },
         ]
       }
     ],

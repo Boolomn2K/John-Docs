@@ -30,7 +30,7 @@ export default defineConfig({
 
     outline: {
       label: '文章目录',
-      level: [2, 4],
+      level: [2, 3],
     },
     // 设置搜索框
     search: {

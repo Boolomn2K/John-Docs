@@ -31,7 +31,7 @@ const todo: TodoPreview = {
 
 把 `K` 限制为类型 `T` 内的 `key`, 这样 `type MyPick<T, K extends keyof T>`。然后就是`T`类型中
 
-这种 `object` 的 `value` 如何映射, 这里我们使用 `TS` 中的 `mapped type` 来实现。
+这种 `object` 类型的 `value` 如何映射, 这里我们使用 `TS` 中的 `mapped type` 来实现。
 
 ### 答案
 
@@ -45,9 +45,9 @@ type Mypick<T, K extends keyof T> = { P in K: T[P] }
 
 不要使用内置的`Readonly<T>`，自己实现一个。
 
-泛型 `Readonly<T>` 会接收一个 _泛型参数_，并返回一个完全一样的类型，只是所有属性都会是只读 (readonly) 的。
+泛型 `Readonly<T>` 会接收一个 _泛型参数_，并返回一个完全一样的类型，只是所有属性都会是只读
 
-也就是不可以再对该对象的属性赋值。
+(readonly) 的。也就是不可以再对该对象的属性赋值。
 
 例如：
 
@@ -92,9 +92,9 @@ type result = TupleToObject<typeof tuple> // expected { 'tesla': 'tesla', 'model
 
 ### 思路
 
-从答案推导可知，只要我们得到这个元组内的所有成员再通过 `mapped type` 就可以得到。那么第一
+从答案推导可知，只要我们得到这个元组内的所有成员再通过 `mapped type` 就可以得到。那么第
 
-步是思考如何得到元组内的所有值。
+一步是思考如何得到元组内的所有值。
 
 首先看看 `typeof tuple` 结果
 
@@ -118,7 +118,7 @@ type TupleToObject<T extends readonly string[]> = {
 
 `symbol` 类型而这里的 `T` 是 `readonly string[]` 类型, 所以会报错。
 
-所以接下来思路就是如何把 `T` 从 `readonly string[]` 转成没有合法值, 恰好在 `TS` 手册中的 
+所以接下来思路就是如何把 `T` 从 `readonly string[]` 转成合法值, 恰好在 `TS` 手册中的 
 
 `Indexed Access Types` 章节就有一个获取思路
 

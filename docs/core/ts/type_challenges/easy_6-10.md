@@ -19,9 +19,7 @@ type Result = MyExclude<'a' | 'b' | 'c', 'a'> // 'b' | 'c'
 遍历 `T` 内所有成员,把符合 `U` 的 `T` 内成员剔除。
 
 ::: tip
-这里涉及到 `conditional Types` 中的 `Distributive Conditional Types` 知识, 就是当条件类型作用在泛
-型类型时,你放进泛型变量 `T` 中的类型是 `union` 类型时,例如`type something<T> = T extends U ` 这里面
-这个 `T` 如果是 `union`类型, 就会触发分布式条件类型。
+这里涉及到 `conditional Types` 中的 `Distributive Conditional Types` 知识, 就是当条件类型作用在泛型类型时,你放进泛型变量 `T` 中的类型是 `union` 类型时,例如`type something<T> = T extends U ` 这里面这个 `T` 如果是 `union`类型, 就会触发分布式条件类型。
 :::
 
 容易混淆的是一般 `union` 类型使用条件类型时, 顺带一提， `unionType extends unionType` 判断依据是**前者是否后者的子集**
@@ -88,7 +86,9 @@ type Result = MyAwaited<ExampleType> // string
 
  `TypeScript` 类型系统中无法（也不适合）被静态推导，因此无需也不应考虑 reject 的情况。要
 
- 实现和 `TS` 手册中 `Utility Types` 一样的代码首先要理解 `Promise`, 这里直接上链接 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise), 其余补充在下方解答中的代码解释。
+ 实现和 `TS` 手册中 `Utility Types` 一样的代码首先要理解 `Promise`, 这里直接上链接 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise), 其余
+ 
+ 补充在下方解答中的代码解释。
 
 ### 解答
 
