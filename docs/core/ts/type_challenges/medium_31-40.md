@@ -305,8 +305,9 @@ type c = StartsWith<'abc', 'abcd'> // expected to be false
 ### 解答
 
 ```ts
-type StartsWith<T extends string, U extends string> =
-  T extends `${U}${string}` ? true : false;
+type StartsWith<T extends string, U extends string> = T extends `${U}${string}`
+  ? true
+  : false;
 ```
 
 ## 第三十六题 EndsWith
@@ -372,7 +373,8 @@ type UserPartialName = PartialByKeys<User, 'name'> // { name?:string; age:number
 
 ```ts
 type PartialByKeys<T, K extends keyof T = keyof T> = Partial<Pick<T, K>> & Omit<T, K> extends infer O
-  ? { [P in keyof O]: O[P] }: never
+  ? { [P in keyof O]: O[P] }
+  : never
 ```
 
 ## 第三十八题 RequiredByKeys
