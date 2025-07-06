@@ -51,7 +51,8 @@ export const getSidebar: GetSidebarFunction = () => {
           { text: 'medium 类61-70题', link: '/core/ts/type_challenges/medium_61-70' },
           { text: 'medium 类71-80题', link: '/core/ts/type_challenges/medium_71-80' },
           { text: 'medium 类81-90题', link: '/core/ts/type_challenges/medium_81-90' },
-          { text: 'medium 类91-102题', link: '/core/ts/type_challenges/medium_91-102' },
+          { text: 'medium 类91-100题', link: '/core/ts/type_challenges/medium_91-100' },
+          { text: 'medium 类101-110题', link: '/core/ts/type_challenges/medium_101-110' },
         ]
       }
     ],
@@ -62,6 +63,15 @@ export const getSidebar: GetSidebarFunction = () => {
           { text: '目录', link: '/core/ts/typescript_tutorial/' },
           { text: '介绍', link: '/core/ts/typescript_tutorial/introduction' },
           { text: '内容', link: '/core/ts/typescript_tutorial/newContent' }
+        ]
+      }
+    ],
+    '/others': [
+      {
+        text: '其它',
+        items: [
+          { text: '目录', link: '/others/' },
+          { text: '工作排期', link: '/others/WorkScheduling' },
         ]
       }
     ]
