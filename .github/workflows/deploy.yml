@@ -45,7 +45,7 @@ jobs:
       - name: List files in workspace
         run: ls -la
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Build with VitePress
         run: pnpm docs:build
       - name: Upload artifact
