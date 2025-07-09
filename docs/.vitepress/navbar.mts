@@ -103,6 +103,12 @@ export const getNavbar: NavbarFunction = () => {
             { text: '浏览器奇技淫巧', link: '/troubleshooting/browser' },
             { text: '性能优化秘籍', link: '/troubleshooting/performance' }
           ]
+        },
+        {
+          text: '其它',
+          items: [
+            { text: '其它', link: '/others' },
+          ]
         }
       ]
     },

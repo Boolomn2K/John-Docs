@@ -39,9 +39,7 @@ export const getSidebar: GetSidebarFunction = () => {
         items: [
           { text: '目录', link: '/core/ts/type_challenges/' },
           { text: '介绍', link: '/core/ts/type_challenges/introduction' },
-          { text: 'easy 类1-5题', link: '/core/ts/type_challenges/easy_1-5' },
-          { text: 'easy 类6-10题', link: '/core/ts/type_challenges/easy_6-10' },
-          { text: 'easy 类11-13题', link: '/core/ts/type_challenges/easy_11-13' },
+          { text: 'easy 类1-13题', link: '/core/ts/type_challenges/easy_1-13' },
           { text: 'medium 类1-10题', link: '/core/ts/type_challenges/medium_1-10' },
           { text: 'medium 类11-20题', link: '/core/ts/type_challenges/medium_11-20' },
           { text: 'medium 类21-30题', link: '/core/ts/type_challenges/medium_21-30' },
@@ -53,6 +51,14 @@ export const getSidebar: GetSidebarFunction = () => {
           { text: 'medium 类81-90题', link: '/core/ts/type_challenges/medium_81-90' },
           { text: 'medium 类91-100题', link: '/core/ts/type_challenges/medium_91-100' },
           { text: 'medium 类101-110题', link: '/core/ts/type_challenges/medium_101-110' },
+          { text: 'hard 类1-10题', link: '/core/ts/type_challenges/hard_1-10' },
+          { text: 'hard 类11-20题', link: '/core/ts/type_challenges/hard_11-20' },
+          { text: 'hard 类21-30题', link: '/core/ts/type_challenges/hard_21-30' },
+          { text: 'hard 类31-40题', link: '/core/ts/type_challenges/hard_31-40' },
+          { text: 'hard 类41-50题', link: '/core/ts/type_challenges/hard_41-50' },
+          { text: 'hard 类51-60题', link: '/core/ts/type_challenges/hard_51-60' },
+          { text: 'extreme 类1-10题', link: '/core/ts/type_challenges/extreme_1-10' },
+          { text: 'extreme 类11-20题', link: '/core/ts/type_challenges/extreme_11-20' },
         ]
       }
     ],

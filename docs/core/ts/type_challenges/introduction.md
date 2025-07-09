@@ -8,7 +8,7 @@ TS 体操官方 [仓库地址](https://github.com/type-challenges/type-challenge
 
 ## 为什么
 
-希望通过输出知识思路达到更好的学习效果
+no why
 
 ## 一些补充说明
 
