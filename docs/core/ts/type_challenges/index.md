@@ -1,7 +1,5 @@
 # 目录
-- [esay 类1-5题](./easy_1-5.md)
-- [esay 类6-10题](./easy_6-10.md)
-- [esay 类11-13题](./easy_11-13.md)
+- [esay 类1-13题](./easy_1-13.md)
 - [medium 类1-10题](./medium_1-10.md)
 - [medium 类11-20题](./medium_11-20.md)
 - [medium 类21-30题](./medium_21-30.md)
