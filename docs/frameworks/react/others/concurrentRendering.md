@@ -2,7 +2,7 @@
 
 ## React 的三层执行架构
 
-![React的三层执行架构](/images/react/others//images/react/others/concurrentRendering/ReactExecutionArchitecture.png)
+![React的三层执行架构](/images/react/others/concurrentRendering/ReactExecutionArchitecture.png)
 
 演示案例
 

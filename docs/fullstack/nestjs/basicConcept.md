@@ -77,7 +77,7 @@ web 服务器就会生成一个 `response` 对象，
 
 ## 什么是 Ioc 和 DI ?
 
-![什么是Ioc和DI?](/images/fullstack/nestjs/basicConcept/IocAndDi.png)
+![什么是Ioc和DI?](/images/fullstack/nestjs/basicConcept/IocAndDI.png)
 
 ### 关于 Ioc
 

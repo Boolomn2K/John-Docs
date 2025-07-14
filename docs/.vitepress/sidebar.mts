@@ -76,8 +76,18 @@ export const getSidebar: GetSidebarFunction = () => {
       {
         text: '其它',
         items: [
-          { text: '目录', link: '//frameworks/react/others/' },
-          { text: 'react18并发渲染原理', link: '/others//frameworks/react/others/concurrentRendering' },
+          { text: '目录', link: '/frameworks/react/others/' },
+          { text: 'react18并发渲染原理', link: '/frameworks/react/others/concurrentRendering' },
+        ]
+      }
+    ],
+    '/fullstack/nestjs': [
+      {
+        text: 'Nestjs',
+        items: [
+          { text: '目录', link: '/fullstack/nestjs/' },
+          { text: '介绍', link: '/fullstack/nestjs/introduction' },
+          { text: 'nestjs 基础概念', link: '/fullstack/nestjs/basicConcept' }
         ]
       }
     ],
