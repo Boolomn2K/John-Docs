@@ -72,6 +72,15 @@ export const getSidebar: GetSidebarFunction = () => {
         ]
       }
     ],
+    '/frameworks/react/others': [
+      {
+        text: '其它',
+        items: [
+          { text: '目录', link: '//frameworks/react/others/' },
+          { text: 'react18并发渲染原理', link: '/others//frameworks/react/others/concurrentRendering' },
+        ]
+      }
+    ],
     '/others': [
       {
         text: '其它',

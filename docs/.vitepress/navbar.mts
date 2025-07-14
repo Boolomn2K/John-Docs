@@ -31,17 +31,19 @@ export const getNavbar: NavbarFunction = () => {
         {
           text: 'React 生态',
           items: [
-            { text: 'React 18 核心', link: '/frameworks/react/core' }
+            { text: 'React 18 核心', link: '/frameworks/react/core' },
             // { text: 'Next.js 全栈开发', link: '/frameworks/react/nextjs/' },
             // { text: '状态管理（Redux/Zustand）', link: '/frameworks/react/state/' }
+            { text: '其它', link: '/frameworks/react/others' }
           ]
         },
         {
           text: 'Vue 生态',
           items: [
-            { text: 'Vue 3', link: '/frameworks/vue/core' }
+            { text: 'Vue 3', link: '/frameworks/vue/core' },
             // { text: 'Nuxt 服务端渲染', link: '/frameworks/vue/nuxt/' },
             // { text: 'Pinia 状态管理', link: '/frameworks/vue/state/' }
+            { text: '其它', link: '/frameworks/vue/others' }
           ]
         }
       ]
