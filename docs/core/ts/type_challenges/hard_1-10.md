@@ -5,7 +5,6 @@
 ### 问题 
 
 实现类似Vue的类型支持的简化版本。
-
 通过提供一个函数`SimpleVue`（类似于`Vue.extend`或`defineComponent`），它应该正确地推断出 computed 和 methods 内部的`this`类型。
 
 在此挑战中，我们假设`SimpleVue`接受只带有`data`，`computed`和`methods`字段的Object作为其唯一的参数，
@@ -166,21 +165,89 @@ type Curried<F> = F extends (...args: infer Args) => infer Return
 declare function Currying<T extends Function>(fn: T): Curried<T>
 ```
 
-## 第三题
+## 第三题 Union to Intersection
 
-### 问题 
+### 问题
+
+实现高级工具类型 `UnionToIntersection<U>`
+
+例如
+
+```ts
+type I = UnionToIntersection<'foo' | 42 | true> // expected to be 'foo' & 42 & true
+```
 
 ### 思路
 
+- `U extends infer R ? (x: R) => any : never`
+
+  将联合类型 `U` 拆解为各个成员 `R`，并变成一个函数 `(x: R) => any`。
+
+  这样会生成一个联合类型的函数签名，例如：
+  ```ts
+  (x: 'foo') => any | (x: 42) => any | (x: true) => any
+  ```
+
+- 接下来再整体判断这个函数签名是否可以赋值给：
+  ```ts
+  (x: infer V) => any
+  ```
+
+  由于函数参数是**逆变**的，TypeScript 会将所有 `(x: T)` 合并为一个参数的**交叉类型**，即：
+  ```ts
+  x: 'foo' & 42 & true
+  ```
+
+- 最终推导出 `V` 就是我们想要的交叉类型。
+
 ### 解答
 
-## 第四题
+```ts
+type UnionToIntersection<U> = (U extends infer R ? (x: R) => any : never) extends (x: infer V) => any ? V : never
+```
+
+## 第四题 Get Required
 
 ### 问题 
 
+实现高级工具类型 `GetRequired<T>`，该类型保留所有必需的属性
+
+例如
+
+```ts
+type I = GetRequired<{ foo: number, bar?: string }> // expected to be { foo: number }
+```
+
 ### 思路
 
+**关键点：如何判断某属性是否是必需的？**
+
+我们可以利用 TypeScript 内置的 `Required<T>` 来构造一个“全部属性都为必需”的版本，再与原始属性类型进行比较。
+
+判断方式如下：
+
+```ts
+T[P] extends Required<T>[P]
+```
+
+- 如果 `T[P]` 是必需的，这个判断结果为 `true`。
+- 如果 `T[P]` 是可选的（即 `undefined` 是其联合类型的一部分），它就无法满足 `Required<T>[P]`，判断为 `false`。
+
+**如何提取满足条件的键？**
+
+借助映射类型的 `as` 语法进行**键重映射**，实现筛选：
+
+```ts
+{ [P in keyof T as 条件 ? P : never]: T[P] }
+```
+
+如果条件不满足（即不是必需属性），则将该键变为 `never`，从而在结果中移除。
+
 ### 解答
+
+```ts
+type GetRequired<T> = { [P in keyof T as T[P] extends Required<T>[P] ? P : never]: T[P] };
+```
 
 ## 第五题
 
