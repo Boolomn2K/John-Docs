@@ -249,50 +249,245 @@ T[P] extends Required<T>[P]
 type GetRequired<T> = { [P in keyof T as T[P] extends Required<T>[P] ? P : never]: T[P] };
 ```
 
-## 第五题
+## 第五题 Get Optional
 
 ### 问题 
 
+实现高级工具类型 `GetOptional<T>`，该类型保留所有可选属性
+
+例如
+
+```ts
+type I = GetOptional<{ foo: number, bar?: string }> // expected to be { bar?: string }
+```
+
 ### 思路
+
+- 对于每个属性 `P`，我们进行判断：
+  ```ts
+  T[P] extends Required<T>[P] ? never : P
+  ```
+  - `Required<T>[P]` 是强制为必选属性的版本。
+  - 如果 `T[P]` 是可选的，那么它和 `Required<T>[P]` 就不会相同。
 
 ### 解答
 
-## 第六题
+```ts
+type GetOptional<T> = { [P in keyof T as T[P] extends Required<T>[P] ? never : P]: T[P] };
+```
+
+## 第六题 Required Keys
 
 ### 问题 
 
+实现高级工具类型 `RequiredKeys<T>`，该类型返回 T 中所有必需属性的键组成的一个联合类型。
+
+例如
+
+```ts
+type Result = RequiredKeys<{ foo: number; bar?: string }>
+// expected to be “foo”
+```
+
 ### 思路
+
+- 通过 `Pick<T, K>` 提取单个属性；
+- 用 `Required` 转换为必需版本；
+- 再判断 `T` 是否兼容这个必需版本；
 
 ### 解答
 
-## 第七题
+```ts
+type RequiredKeys<T , K = keyof T> = K extends keyof T
+  ? T extends Required<Pick<T,K>>
+    ? K
+    : never
+  :never
+```
+
+## 第七题 Optional Keys
 
 ### 问题 
 
+实现高级工具类型`OptionalKeys<T>`，该类型将 T 中所有可选属性的键合并为一个联合类型。
+
 ### 思路
+
+与上题类似，只是判断条件相反。
 
 ### 解答
 
-## 第八题
+```ts
+type OptionalKeys<T,K = keyof T> = K extends keyof T
+  ? T extends Required<Pick<T,K>>
+    ? never
+    : K
+  :never;
+```
+
+## 第八题 Capitalize Words
 
 ### 问题 
 
+实现`CapitalizeWords<T>`，它将**字符串的每个单词**的第一个字母转换为大写，其余部分保持原样。
+
+例如
+
+```ts
+type capitalized = CapitalizeWords<"hello world, my friends"> // 预期为 'Hello World, My Friends'
+```
+
 ### 思路
+
+**如何判断是否是字母？**
+
+```ts
+Uppercase<A> extends Lowercase<A> // false 表示是字母
+```
+
+非字母字符（如空格、标点）在大小写转换后没有变化，而字母会变，因此可以用这个判断。
+
+**策略：**
+
+用变量 `W` 暂存正在收集的单词字符。
+
+1. 遍历每个字符 `A`
+2. 如果是字母 ➝ 加到 `W` 中继续收集
+3. 如果不是字母 ➝ 说明一个单词结束：
+   - 用 `Capitalize<W>` 将首字母大写
+   - 输出该单词和当前字符（如空格）
+   - 继续处理剩下的字符串
+4. 处理完后，用 `Capitalize<W>` 补上最后一个单词
 
 ### 解答
 
-## 第九题
+```ts
+type CapitalizeWords<
+  S extends string,
+  W extends string = ''
+> = S extends `${infer A}${infer B}`
+  ? Uppercase<A> extends Lowercase<A>
+    ? `${Capitalize<`${W}${A}`>}${CapitalizeWords<B>}`
+    : CapitalizeWords<B, `${W}${A}`>
+  : Capitalize<W>
+```
+
+## 第九题 CamelCase
 
 ### 问题 
 
+实现 `CamelCase<T>` ，将 `snake_case` 类型的表示的字符串转换为 `camelCase` 的表示方式。
+
+例如
+
+```ts
+type camelCase1 = CamelCase<"hello_world_with_types"> // 预期为 'helloWorldWithTypes'
+type camelCase2 = CamelCase<"HELLO_WORLD_WITH_TYPES"> // 期望与前一个相同
+```
+
 ### 思路
+1. **统一小写**  
+   为了保证输出中，原本可能为大写的字母也能被正确处理为全小写开头（如示例中的 `"HELLO_WORLD"`），在最终返回没有 `_` 时，我们直接对整个剩余字符串做 `Lowercase<S>`。  
+
+2. **匹配第一个下划线**  
+   我们把输入拆成三段：  
+   ```ts
+   S extends `${infer F}_${infer R1}${infer R2}`
+   ```  
+   - `F`：下划线前的所有内容（可能是多个字符，或空串）。  
+   - `_`：当前要处理的下划线分隔符。  
+   - `R1`：下划线后紧跟的第一个字符。  
+   - `R2`：`R1` 之后的其余部分。  
+
+3. **判断下划线后面是不是“有效字母”**  
+   我们要做的是：如果 `R1` 是一个字母（或数字、特殊字符……），就把它“提取”出来并大写；否则，把这个下划线当成普通字符保留下来。  
+   ```ts
+   Uppercase<R1> extends Lowercase<R1>
+   ```  
+   - 当且仅当 `R1` 在大小写转换前后都不变（例如数字、下划线本身、标点），才会成立。  
+   - 成立的时候，我们认为它不应该被当作单词首字母去大写，就保留原下划线：  
+     ```ts
+     `${Lowercase<F>}_${CamelCase<`${R1}${R2}`>}`
+     ```  
+   - 否则，`R1` 是一个字母（或其他可大写的字符），我们去掉下划线，把它 `Uppercase<R1>`，并与前面的小写化结果拼接：  
+     ```ts
+     `${Lowercase<F>}${Uppercase<R1>}${CamelCase<R2>}`
+     ```
+
+4. **递归调用**  
+   - 在上述两种分支中，都调用 `CamelCase<…>` 处理剩余的字符串。  
+   - 递归会不断消耗掉每一个下划线／字母对，直到遇到没有下划线的纯字符串。  
+
+5. **终止条件**  
+   当 `S` 已经不再匹配 `${infer F}_${…}` 模式（即没有更多下划线），直接返回 `Lowercase<S>`，完成整个转换。
+
+---
+
+这样就可以保证：
+
+- 首尾及中间所有单词都被正确拼接成驼峰形式；
+- 输入中原有的大写或小写字母都被统一处理；
+- 连续的非字母下划线（或其他分隔符）也能被合理保留或跳过。
+
 
 ### 解答
 
-## 第十题
+```ts
+type CamelCase<S extends string> = S extends `${infer F}_${infer R1}${infer R2}`
+  ? Uppercase<R1> extends Lowercase<R1>
+    ? `${Lowercase<F>}_${CamelCase<`${R1}${R2}`>}`
+    : `${Lowercase<F>}${Uppercase<R1>}${CamelCase<R2>}`
+  : Lowercase<S>
+```
 
-### 问题 
+## 第十题 C-printf Parser
+
+### 问题
+
+`C` 语言中有一个函数：`printf`。这个函数允许我们打印一些格式化的内容。像这样：
+
+```c
+printf("The result is %d.", 42);
+```
+
+本挑战要求你解析输入字符串并提取格式占位符，例如 `%d` 和` %f`。例如，如果输入字符串为`“The result is %d.”`，则解析结果为元组 `['dec']`。
+
+这是映射表:
+
+```ts
+type ControlsMap = {
+  c: 'char',
+  s: 'string',
+  d: 'dec',
+  o: 'oct',
+  h: 'hex',
+  f: 'float',
+  p: 'pointer',
+}
+```
 
 ### 思路
 
+要实现对格式字符串的解析，需要利用 TypeScript 的 *模板字符串类型（template literal types）* 和 *条件类型（conditional types）* 结合递归来完成。具体思路如下：
+
+1. **匹配“%”及后续字符**：使用条件类型判断 ```T extends `${string}%${infer C}${infer Rest}` ```，即先匹配任意前缀（`${string}`），然后遇到一个 `%`，接着提取 `%` 后面的第一个字符为 `C`，剩余的字符串为 `Rest`。这样可以递归地从左到右依次找到每个百分号占位符。
+
+2. **判断提取字符是否为有效占位符**：利用 `C extends keyof ControlsMap` 判断刚才提取的字符 `C` 是否在 `ControlsMap` 的键中。如果是，则说明这是一个有效的格式占位符；否则就忽略这个占位符字符并继续解析。
+
+3. **映射并递归**：若 `C` 在 `ControlsMap` 中，就将对应的控制名称 `ControlsMap[C]` 加入结果数组，并对剩余字符串 `Rest` 继续应用同样的解析逻辑。这里用 `[ControlsMap[C], ...ParsePrintFormat<Rest>]` 通过展开（`...`）实现将当前结果与递归结果连接成一个元组。
+
+4. **忽略无效占位符并继续**：如果 `C` 不在 `ControlsMap` 中，则说明虽然匹配到了 `%`，但后面紧接的字符不是我们要找的控制字符（例如可能出现 `%%` 的情况）。此时不将任何新项加入结果，直接递归解析 `Rest`，即 `[...]` 不包含新的元素，只返回对 `Rest` 的解析结果。
+
+5. **结束条件**：当字符串中不再包含 `%` 时，条件类型的匹配失败（不符合模式 `${string}%${infer C}${infer Rest}`），这时返回空元组 `[]` 作为递归结束的基线。
+
+
 ### 解答
+
+```ts
+type ParsePrintFormat<T extends string> =
+  T extends `${string}%${infer C}${infer Rest}`
+    ? C extends keyof ControlsMap
+      ? [ControlsMap[C], ...ParsePrintFormat<Rest>]
+      : [...ParsePrintFormat<Rest>]
+    : [];
+```
