@@ -112,6 +112,7 @@ export const getSidebar: GetSidebarFunction = () => {
           { text: '前端工程化', link: '/others/interview/feEngineering' },
           { text: 'Vue', link: '/others/interview/vue' },
           { text: 'NodeJS', link: '/others/interview/nodejs' },
+          { text: '手写代码', link: '/others/interview/handwritten' }
         ]
       }
     ],
