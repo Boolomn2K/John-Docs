@@ -30,4 +30,4 @@ NodeJS相关面试题，参考[NodeJS相关面试题](others/interview/nodejs.md
 
 ## 需要会写的代码部分
 
-[需要会写的代码部分](others/interview/handwritten.md)
+[需要会写的代码部分](others/interview/handWritten.md)
