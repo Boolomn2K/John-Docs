@@ -109,7 +109,8 @@ export const getNavbar: NavbarFunction = () => {
         {
           text: '其它',
           items: [
-            { text: '其它', link: '/others' },
+            { text: '其它', link: '/others/others' },
+            { text: '面试相关', link: '/others/interview' }
           ]
         }
       ]

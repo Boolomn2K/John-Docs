@@ -91,14 +91,29 @@ export const getSidebar: GetSidebarFunction = () => {
         ]
       }
     ],
-    '/others': [
+    '/others/others': [
       {
         text: '其它',
         items: [
-          { text: '目录', link: '/others/' },
-          { text: '工作排期', link: '/others/WorkScheduling' },
+          { text: '目录', link: '/others/others/' },
+          { text: '工作排期', link: '/others/others/WorkScheduling' },
         ]
       }
-    ]
+    ],
+    '/others/interview': [
+      {
+        text: '面试相关',
+        items: [
+          { text: '目录', link: '/others/interview/' },
+          { text: 'JS', link: '/others/interview/js' },
+          { text: 'HTML/CSS', link: '/others/interview/html&css' },
+          { text: 'ES6', link: '/others/interview/es6' },
+          { text: 'HTTP与计算机网络', link: '/others/interview/http&network' },
+          { text: '前端工程化', link: '/others/interview/feEngineering' },
+          { text: 'Vue', link: '/others/interview/vue' },
+          { text: 'NodeJS', link: '/others/interview/nodejs' },
+        ]
+      }
+    ],
   }
 }
