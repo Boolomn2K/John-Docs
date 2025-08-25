@@ -30,4 +30,8 @@ NodeJS相关面试题，参考[NodeJS相关面试题](others/interview/nodejs.md
 
 ## 需要会写的代码部分
 
-[需要会写的代码部分](others/interview/handWritten.md)
+手写代码相关面试题，参考[需要会写的代码部分](others/interview/handWritten.md)
+
+## Vue 原理
+
+Vue 原理相关面试题，参考[Vue 原理相关面试题](others/interview/vuePrinciples.md)

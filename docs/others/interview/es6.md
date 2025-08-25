@@ -1,33 +1,35 @@
 # ES6
 
-1.let、const和var的概念与区别2.变量提升与暂时性死区
+## 1.`let`、`const`和`var`的概念与区别
 
-3.变量的结构赋值
+## 2.变量提升与暂时性死区
 
-4.箭头函数及其this问题
+## 3.变量的结构赋值
 
-5.Symbol概念及其作用
+## 4.箭头函数及其`this`问题
 
-6.Set和 Map数据结构
+## 5.`Symbol`概念及其作用
 
-7.Proxy
+## 6.`Set` 和 `Map`数据结构
 
-8.Reflect对象
+## 7.`Proxy`
 
-9.Promise(手撕Promise A+规范、Promise.all、Promise相关AP和方法)
+## 8.`Reflect`对象
 
-10.lterator和for...of(lterator遍历器的实现)
+## 9.`Promise`(手撕`Promise` A+规范、`Promise.all`、`Promise`相关`API`和方法)
 
-11.循环语法比较及使用场景(for、forEach、for...in、for...of)
+## 10.`lterator`和`for...of`(`lterator`遍历器的实现)
 
-12.Generator及其异步方面的应用
+## 11.循环语法比较及使用场景(`for`、`forEach`、`for...in`、`for...of`)
 
-13.async函数
+## 12.`Generator`及其异步方面的应用
 
-14.几种异步方式的比较(回调、setTimeout、Promise、Generator、async)
+## 13.`async`函数
 
-15.class基本语法及继承
+## 14.几种异步方式的比较(回调、`setTimeout`、`Promise`、`Generator`、`async`)
 
-16.模块加载方案比较(CommonJS和ES6的Module)
+## 15.`class`基本语法及继承
 
-17.ES6模块加载与CommonJs加载的原理
+## 16.模块加载方案比较(`CommonJS`和`ES6`的`Module`)
+
+## 17.`ES6`模块加载与`CommonJS`加载的原理
