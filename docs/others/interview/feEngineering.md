@@ -407,8 +407,6 @@ module.exports = {
 };
 ```
 
-## 3.`loader`与 `plugin`原理与实现## 2.`Webpack`基本概念与配置
-
 ## 3.`loader`与 `plugin`原理与实现
 
 ### 概念解析
@@ -800,8 +798,6 @@ A：HMR通过**文件系统监听**（如chokidar）检测变化，仅重新构�
 - **数据可视化**：实时更新图表配置，保留当前数据状态
 - **游戏开发**：修改游戏逻辑后角色状态不丢失
 - **组件库开发**：实时预览组件样式和交互变化
-
-## 5.`Webpack`的优化问题## 4.`Webpack`的模块热替换及实现
 
 ## 5.`Webpack`的优化问题
 
@@ -1314,8 +1310,6 @@ A：主流方案：1. **Redux**：适合大型应用，生态完善但样板代�
   - 早期GitHub Issues使用纯SPA，因性能问题改为混合架构
   - 部分电商网站因SEO问题，商品列表页改用SSR
 
-## 7.`SSR`实现及优缺点## 6.`SPA`及其优缺点
-
 ## 7.`SSR`实现及优缺点
 
 ### 概念解析
@@ -1539,10 +1533,421 @@ class Button {
   console.log(searchInput.render()); // <input type="search" placeholder="请输入搜索关键词">
 ```
 
-##### （2）应用场景
+##### （2）工厂方法模式
+**定义**：通过定义工厂接口让子类决定实例化哪个产品类，将对象创建延迟到子类。
+
+```javascript
+// 产品接口
+class Product {
+  create() {}
+}
+
+// 具体产品A
+class ConcreteProductA extends Product {
+  create() {
+    return { type: 'ProductA', feature: 'Feature A' };
+  }
+}
+
+// 具体产品B
+class ConcreteProductB extends Product {
+  create() {
+    return { type: 'ProductB', feature: 'Feature B' };
+  }
+}
+
+// 工厂接口
+class Factory {
+  factoryMethod() {}
+}
+
+// 具体工厂A
+class ConcreteFactoryA extends Factory {
+  factoryMethod() {
+    return new ConcreteProductA();
+  }
+}
+
+// 具体工厂B
+class ConcreteFactoryB extends Factory {
+  factoryMethod() {
+    return new ConcreteProductB();
+  }
+}
+
+// 使用示例
+const factoryA = new ConcreteFactoryA();
+const productA = factoryA.factoryMethod().create();
+console.log(productA); // { type: 'ProductA', feature: 'Feature A' }
+
+const factoryB = new ConcreteFactoryB();
+const productB = factoryB.factoryMethod().create();
+console.log(productB); // { type: 'ProductB', feature: 'Feature B' }
+```
+
+##### （3）抽象工厂模式
+**定义**：提供一个接口，用于创建相关或依赖对象的家族，而无需指定具体类。
+
+```javascript
+// 抽象产品A
+class AbstractProductA {
+  use() {}
+}
+
+// 具体产品A1
+class ProductA1 extends AbstractProductA {
+  use() {
+    return 'Using Product A1';
+  }
+}
+
+// 具体产品A2
+class ProductA2 extends AbstractProductA {
+  use() {
+    return 'Using Product A2';
+  }
+}
+
+// 抽象产品B
+class AbstractProductB {
+  interact() {}
+}
+
+// 具体产品B1
+class ProductB1 extends AbstractProductB {
+  interact(productA) {
+    return `${productA.use()} with Product B1`;
+  }
+}
+
+// 具体产品B2
+class ProductB2 extends AbstractProductB {
+  interact(productA) {
+    return `${productA.use()} with Product B2`;
+  }
+}
+
+// 抽象工厂
+class AbstractFactory {
+  createProductA() {}
+  createProductB() {}
+}
+
+// 具体工厂1
+class ConcreteFactory1 extends AbstractFactory {
+  createProductA() {
+    return new ProductA1();
+  }
+  createProductB() {
+    return new ProductB1();
+  }
+}
+
+// 具体工厂2
+class ConcreteFactory2 extends AbstractFactory {
+  createProductA() {
+    return new ProductA2();
+  }
+  createProductB() {
+    return new ProductB2();
+  }
+}
+
+// 使用示例
+const factory1 = new ConcreteFactory1();
+const productA1 = factory1.createProductA();
+const productB1 = factory1.createProductB();
+console.log(productB1.interact(productA1)); // Using Product A1 with Product B1
+
+const factory2 = new ConcreteFactory2();
+const productA2 = factory2.createProductA();
+const productB2 = factory2.createProductB();
+console.log(productB2.interact(productA2)); // Using Product A2 with Product B2
+```
+
+##### （4）三种工厂模式对比
+| 模式 | 核心特点 | 优点 | 缺点 | 适用场景 |
+|------|----------|------|------|----------|
+| 简单工厂 | 一个工厂类创建所有产品 | 实现简单，集中管理 | 违反开闭原则，扩展困难 | 产品类型少且固定 |
+| 工厂方法 | 每个产品对应一个工厂 | 符合开闭原则，扩展性好 | 类数量增多，结构复杂 | 产品种类多变 |
+| 抽象工厂 | 创建产品家族 | 隔离具体类，产品一致性 | 扩展产品族困难 | 多产品系列场景 |
+
+##### （5）应用场景
 - UI组件库（统一创建组件）
 - 表单生成器（根据配置创建不同表单元素）
 - 服务层封装（统一数据请求对象创建）
+- 跨平台应用开发（不同平台对应不同工厂）
+
+##### （6）面试要点
+**Q：简单工厂和工厂方法的主要区别是什么？**
+A：核心区别在于职责和扩展性：简单工厂由一个工厂类负责所有产品创建，违反开闭原则；工厂方法为每个产品创建专属工厂，符合开闭原则，扩展性更好。
+
+**Q：什么情况下适合使用抽象工厂模式？**
+A：当系统需要创建多个产品系列（产品家族），且产品之间存在关联或依赖关系时，如跨平台UI组件库（Windows和Mac风格组件族）、数据库访问层（不同数据库驱动族）。
+
+#### 2. 单例模式
+**定义**：保证一个类仅有一个实例，并提供一个全局访问点。
+
+##### （1）常见实现方式
+```javascript
+// 1. 饿汉式（立即初始化）
+class SingletonEager {
+  static instance = new SingletonEager();
+  constructor() {}
+  static getInstance() {
+    return this.instance;
+  }
+}
+
+// 2. 懒汉式（延迟初始化）
+class SingletonLazy {
+  static instance;
+  constructor() {}
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new SingletonLazy();
+    }
+    return this.instance;
+  }
+}
+
+// 3. ES6模块单例（天然单例）
+// singletonModule.js
+class SingletonModule {
+  constructor() {}
+}
+export default new SingletonModule();
+
+// 4. 闭包实现
+const SingletonClosure = (() => {
+  let instance;
+  return {
+    getInstance: () => {
+      if (!instance) {
+        instance = new (class {
+          constructor() {}
+        })();
+      }
+      return instance;
+    }
+  };
+})();
+```
+
+##### （2）应用场景
+- 全局状态管理（如Vuex/Redux的store）
+- 弹窗管理器（确保同一时间只有一个弹窗）
+- 数据库连接池
+- 日志工具类
+
+##### （3）面试要点
+**Q：如何实现一个线程安全的单例模式？**
+A：在JavaScript中可通过双重检查锁定实现：
+```javascript
+class ThreadSafeSingleton {
+  static instance;
+  static lock = false;
+  constructor() {}
+  static getInstance() {
+    if (!this.instance) {
+      if (!this.lock) {
+        this.lock = true;
+        this.instance = new ThreadSafeSingleton();
+        this.lock = false;
+      } else {
+        // 等待锁释放
+        return this.getInstance();
+      }
+    }
+    return this.instance;
+  }
+}
+```
+
+#### 3. 原型模式
+**定义**：通过复制现有对象来创建新对象，无需知道具体类信息。
+
+##### （1）核心实现
+```javascript
+// 1. 基于Object.create
+const prototype = { type: 'base', getName() { return this.name; } };
+const obj1 = Object.create(prototype);
+obj1.name = 'obj1';
+console.log(obj1.getName()); // obj1
+
+// 2. 原型链继承
+function Animal(name) { this.name = name; }
+Animal.prototype.eat = function() { console.log(`${this.name} is eating`); };
+function Dog(name) { Animal.call(this, name); }
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+Dog.prototype.bark = function() { console.log('Woof!'); };
+
+const dog = new Dog('Buddy');
+dog.eat(); // Buddy is eating
+dog.bark(); // Woof!
+
+// 3. 原型模式工厂
+class PrototypeFactory {
+  constructor(prototype) {
+    this.prototype = prototype;
+  }
+  create() {
+    return Object.create(this.prototype);
+  }
+}
+
+const shapePrototype = { draw() {}, type: 'shape' };
+const factory = new PrototypeFactory(shapePrototype);
+const circle = factory.create();
+circle.type = 'circle';
+circle.draw = function() { console.log('Drawing circle'); };
+```
+
+##### （2）应用场景
+- 对象池（如游戏中的子弹对象复用）
+- JSON.parse/JSON.stringify深拷贝
+- React组件克隆（React.cloneElement）
+
+### 结构型模式
+#### 1. 适配器模式
+**定义**：将一个类的接口转换成客户端期望的另一个接口，使不兼容的类可以一起工作。
+
+##### （1）核心实现
+```javascript
+// 1. 类适配器
+class Target {
+  request() { return 'Target request'; }
+}
+class Adaptee {
+  specificRequest() { return 'Adaptee specific request'; }
+}
+class ClassAdapter extends Target {
+  request() {
+    const adaptee = new Adaptee();
+    return `ClassAdapter: ${adaptee.specificRequest()}`;
+  }
+}
+
+// 2. 对象适配器
+class ObjectAdapter {
+  constructor() {
+    this.adaptee = new Adaptee();
+  }
+  request() {
+    return `ObjectAdapter: ${this.adaptee.specificRequest()}`;
+  }
+}
+
+// 3. 实际应用：API数据适配
+class ApiAdapter {
+  constructor(apiService) {
+    this.apiService = apiService;
+  }
+  async getUserData(userId) {
+    const rawData = await this.apiService.fetchUser(userId);
+    // 转换数据格式
+    return {
+      id: rawData.user_id,
+      name: rawData.user_name,
+      email: rawData.user_email,
+      address: this.formatAddress(rawData.address)
+    };
+  }
+  formatAddress(addressData) {
+    return `${addressData.street}, ${addressData.city}, ${addressData.country}`;
+  }
+}
+```
+
+##### （2）应用场景
+- 第三方库集成（如不同图表库API适配）
+- 旧系统改造（新接口适配旧实现）
+- 数据格式转换（API响应适配前端需求）
+
+### 行为型模式
+#### 1. 观察者模式
+**定义**：定义对象间的一对多依赖关系，当一个对象状态改变时，所有依赖它的对象都会收到通知并自动更新。
+
+##### （1）核心实现
+```javascript
+// 1. 基础实现
+class Subject {
+  constructor() {
+    this.observers = [];
+  }
+  addObserver(observer) {
+    this.observers.push(observer);
+  }
+  removeObserver(observer) {
+    this.observers = this.observers.filter(obs => obs !== observer);
+  }
+  notify(data) {
+    this.observers.forEach(observer => observer.update(data));
+  }
+}
+
+class Observer {
+  update(data) {
+    console.log('Observer updated with data:', data);
+  }
+}
+
+// 2. 实际应用：事件总线
+class EventBus extends Subject {
+  constructor() {
+    super();
+    this.events = {};
+  }
+  on(event, callback) {
+    if (!this.events[event]) {
+      this.events[event] = [];
+    }
+    this.events[event].push(callback);
+  }
+  off(event, callback) {
+    if (this.events[event]) {
+      this.events[event] = this.events[event].filter(cb => cb !== callback);
+    }
+  }
+  emit(event, data) {
+    if (this.events[event]) {
+      this.events[event].forEach(callback => callback(data));
+    }
+  }
+}
+
+// 3. Vue响应式系统简化版
+class ReactiveSubject {
+  constructor(value) {
+    this.value = value;
+    this.subscribers = new Set();
+  }
+  getValue() {
+    return this.value;
+  }
+  setValue(newValue) {
+    this.value = newValue;
+    this.notify();
+  }
+  subscribe(subscriber) {
+    this.subscribers.add(subscriber);
+  }
+  notify() {
+    this.subscribers.forEach(subscriber => subscriber(this.value));
+  }
+}
+```
+
+##### （2）应用场景
+- 响应式数据绑定（Vue/React状态管理）
+- 事件监听系统
+- 发布订阅模式（如消息队列）
+- 数据更新通知（如仪表盘实时数据）
+
+##### （3）面试要点
+**Q：观察者模式和发布订阅模式的区别？**
+A：主要区别在于耦合程度：观察者模式中主题直接通知观察者，是直接耦合；发布订阅模式通过中间代理（事件总线）通信，是间接耦合，解耦更彻底。
 
 ## 9.模块化开发(CommonJS、ES Module、UMD等规范)
 

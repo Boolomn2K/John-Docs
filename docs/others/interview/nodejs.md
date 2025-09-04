@@ -77,7 +77,6 @@ Node.js 事件循环按以下顺序执行：
 - **“单线程 = 不能利用多核”**：错误，可通过 `cluster` 模块创建多进程，充分利用多核 CPU
 
 ## 2.`CommonJS`规范、核心模块
-## 2.`CommonJS`规范、核心模块
 
 ### 概念解析
 **CommonJS** 是 Node.js 采用的**模块规范**，定义了模块的创建、依赖和导出方式，核心目标是解决 JavaScript 的**作用域污染**和**依赖管理**问题。Node.js 内置支持 CommonJS，通过 `require`/`module.exports` 实现模块交互。
@@ -200,7 +199,6 @@ module.exports = { value: 'b' };
 - **值拷贝 vs 引用**：CommonJS 导出值拷贝，ES6 Module 导出实时绑定
 - **顶层 this**：CommonJS 中 `this` 指向 `module.exports`，ES6 Module 中为 `undefined`
 
-## 3.`Node`的异步`I/O`
 ## 3.`Node`的异步`I/O`
 
 ### 概念解析
@@ -349,7 +347,6 @@ fs.readFile('./test.txt', () => {
 - **监控事件循环延迟**：通过 `event-loop-lag` 指标监控性能瓶颈
 - **使用成熟库**：复杂异步流程可采用 `async.js` 等控制流库
 
-## 4.`Node`的内存控制
 ## 4.`Node`的内存控制
 
 ### 概念解析
