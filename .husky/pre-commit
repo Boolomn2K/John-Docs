@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# 打印 pre-commit 钩子触发的提醒信息
+echo "pre-commit钩子已触发, 正在执行代码检查..."

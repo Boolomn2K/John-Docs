@@ -8,6 +8,7 @@
   "author": "John",
   "license": "MIT",
   "devDependencies": {
+    "husky": "^9.1.7",
     "vitepress": "^1.6.3"
   },
   "scripts": {
@@ -15,7 +16,8 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "format": "prettier --check --write .",
-    "format:fail": "prettier --check ."
+    "format:fail": "prettier --check .",
+    "prepare": "husky"
   },
   "dependencies": {
     "prettier": "3.5.3"
