@@ -188,7 +188,7 @@ console.log(second); // b
 | 函数类型       | `this` 指向                          | 能否用 `call/apply/bind` 修改 | 构造函数使用 |
 |----------------|--------------------------------------|------------------------------|--------------|
 | 普通函数       | 调用时的上下文对象（动态绑定）        | 能                           | 能           |
-| 箭头函数       | 定义时的外层 lexical `this`（静态绑定）| 不能（绑定后无法修改）        | 不能（报错） |
+| 箭头函数       | 定义时外层的 `this`（静态绑定）| 不能（绑定后无法修改）        | 不能（报错） |
 
 ### 代码示例：`this` 行为差异
 ```js
@@ -271,7 +271,7 @@ person.sayHi(); // undefined（this 非实例对象）
 ```
 
 ### 面试要点
-- **核心区别**：箭头函数无独立 `this`，继承自外层 lexical context；无 `arguments` 对象；不能用作构造函数。
+- **核心区别**：箭头函数无独立 `this`，继承自外层上下文对象；无 `arguments` 对象；不能用作构造函数。
 - **使用建议**：优先用于纯函数/回调函数，避免用作对象方法、构造函数或需要动态 `this` 的场景。
 - **绑定验证**：可通过 `call` 测试 `this` 能否修改（箭头函数修改无效）。
 ## 5.`Symbol`概念及其作用
@@ -311,28 +311,12 @@ const obj = {
 
 console.log(obj[name]); // 'Symbol Property'（必须用 Symbol 变量访问）
 
-// 2. 定义“私有”属性（非真正私有，仅不可枚举）
-const privateMethod = Symbol('private');
-class MyClass {
-  [privateMethod]() {
-    return 'This is a pseudo-private method';
-  }
-
-  publicMethod() {
-    return this[privateMethod]();
-  }
-}
-
-const instance = new MyClass();
-console.log(instance.publicMethod()); // 'This is a pseudo-private method'
-console.log(instance[privateMethod]); // undefined（外部无法直接访问 Symbol 属性）
-
-// 3. 遍历 Symbol 属性
+// 2. 遍历 Symbol 属性
 console.log(Object.getOwnPropertySymbols(obj)); // [Symbol(name)]（获取所有 Symbol 属性）
 console.log(Reflect.ownKeys(obj)); // [Symbol(name), 'age']（获取所有类型属性）
 ```
 
-### 内置 Well-known Symbols
+### 内置 Symbols
 ES6 提供了一批内置 Symbol，用于修改对象的默认行为（称为“元编程”）：
 ```js
 // 1. Symbol.iterator：定义对象的迭代器接口
@@ -379,10 +363,11 @@ import { STATUS } from './moduleA.js';
 if (status === STATUS.PENDING) { /* 避免字符串常量冲突 */ }
 
 // 2. 扩展内置对象方法
-Array.prototype[Symbol('customFilter')] = function(callback) {
+const customFilter = Symbol('customFilter');
+Array.prototype.customFilter = function(callback) {
   return this.filter(callback);
 };
-[1, 2, 3][Symbol('customFilter')](x => x > 1); // [2, 3]
+[1, 2, 3].customFilter(x => x > 1); // [2, 3]
 ```
 
 ### 面试要点
@@ -390,7 +375,7 @@ Array.prototype[Symbol('customFilter')] = function(callback) {
 - **与其他类型区别**：
   - 和字符串：Symbol 不可隐式转换，字符串可重复
   - 和对象：Symbol 作为属性不可枚举，对象属性默认可枚举
-- **元编程能力**：通过 Well-known Symbols 可修改内置行为（如迭代、类型判断），是高级 ES6 特性的基础。
+- **元编程能力**：通过内置 Symbols 可修改内置行为（如迭代、类型判断），是高级 ES6 特性的基础。
 ## 6.`Set` 和 `Map`数据结构
 
 ### 概念解析
@@ -483,8 +468,12 @@ const uniqueArr = [...new Set(arr)]; // [1, 2, 3]
 const processedElements = new Set();
 function processElement(el) {
   if (processedElements.has(el)) return;
-  processedElements.add(el);
-  // 处理元素逻辑...
+  try {
+    // 处理元素逻辑...
+    processedElements.add(el);
+  } catch (e) {
+    // 处理失败情况
+  }
 }
 
 // 3. Map 缓存（支持非字符串键）
@@ -1375,7 +1364,7 @@ async/await 使用 `try/catch` 统一处理同步和异步错误：
 async function errorHandling() {
   try {
     // 同步错误
-    const a = 1 / 0;
+    throw new Error('同步错误');
 
     // 异步错误
     const data = await new Promise((_, reject) => {

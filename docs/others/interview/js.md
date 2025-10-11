@@ -1624,10 +1624,13 @@ person1.greet(); // 输出: Hello, my name is Alice and I am 30 years old.
 ```
 
 **2. `Object.create` 方法**
+
 `Object.create`方法用于创建一个新对象，并指定其原型对象。它的语法是：
 
 ```javascript
 Object.create(proto, [propertiesObject])
+```
+
 proto：新对象的原型对象。
 propertiesObject（可选）：一个包含一个或多个属性描述符的对象。
 Object.create的主要用途是直接设置新对象的原型，而不通过构造函数。
