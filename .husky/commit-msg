@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# 打印 commit-msg 钩子触发的提醒信息
+echo "commit-msg钩子已触发, 正在执行提交信息检查..."
+
+pnpm exec commitlint --config commitlint.config.mjs --edit "${1}"
